@@ -31,13 +31,13 @@ namespace Challenge20
         static void Main(string[] args)
         {
             Console.Write("");
-            var number = FibonacciNumber(UserInteraction("Which position in sequence? "));
+            int number = FibonacciNumber(UserInteraction("Which position in sequence? "));
             Console.WriteLine("Fibonacci number is {0}", number);
             Console.ReadKey();
         }
         static int FibonacciNumber(int position)
         {
-            var sequence = new List<int> {0, 1};
+            var sequence = new List<int> { 0, 1 };
 
             if (position <= 1) return sequence[position];
             for (int i = 2; i < (position + 1); i++) {
