@@ -17,12 +17,13 @@ namespace Challenge03
 {
     class Challenge03
     {
-        private static void Main(string[] args)
+        static void Main(string[] args)
         {
-            var shapeDimensions = new double[3];
-            shapeDimensions[0] = UserInteraction("Enter width: ");
-            shapeDimensions[1] = UserInteraction("Enter height: ");
-            shapeDimensions[2] = UserInteraction("Enter depth (0 if this is a 2D shape): ");
+            double[] shapeDimensions = {
+                UserInteraction("Enter width: "),
+                UserInteraction("Enter height: "),
+                UserInteraction("Enter depth (0 if this is a 2D shape): ")
+            };
             double answer;
             if (shapeDimensions[2] != 0) {
                 answer = CalcArea(shapeDimensions[0], shapeDimensions[1], shapeDimensions[2]);
@@ -34,7 +35,7 @@ namespace Challenge03
             Console.ReadKey();
         }
 
-        public static double UserInteraction(string prompt)
+        static double UserInteraction(string prompt)
         {
             double providedvalue;
             bool isnumber;
@@ -48,14 +49,14 @@ namespace Challenge03
             return providedvalue;
         }
 
-        public static double CalcArea(double width, double height)
+        static double CalcArea(double width, double height)
         {
-            return width*height;
+            return width * height;
         }
 
-        public static double CalcArea(double width, double height, double depth)
+        static double CalcArea(double width, double height, double depth)
         {
-            return width*height*depth;
+            return width * height * depth;
         }
     }
 }

@@ -1,21 +1,41 @@
 ﻿/* Challenge 14
- *
- * Write a program for a higher / lower guessing game
- *
- * The computer randomly generates a sequence of up to
- * 10 numbers between 1 and 13. The player each after
- * seeing each number in turn has to decide whether the
- * next number is higher or lower.
- *
- * If you can remember Brucie's 'Play your cards right'
- * it's basically that.
- *
- * If you get 10 guesses right you win the game.
- *
- * Extension:
- * - Give the players two lives
- * - Make sure only H or L can be entered
- */
+*
+* Write a program for a higher / lower guessing game
+*
+* The computer randomly generates a sequence of up to
+* 10 numbers between 1 and 13. The player each after
+* seeing each number in turn has to decide whether the
+* next number is higher or lower.
+*
+* If you can remember Brucie's 'Play your cards right'
+* it's basically that.
+*
+* If you get 10 guesses right you win the game.
+*
+* Extension:
+* - Give the players two lives
+* - Make sure only H or L can be entered
+*
+* ---------------------------------------------------------------
+*
+* Note: I have adapted this challenge - in its original
+* form (as shown above) there was the possibility that
+* the randomly-generated next number could be the same
+* as the current number.
+*
+* Instead, I have made the game work as follows:
+* - 12 numbers are selected from a deck containing the numbers 1-13
+* - This array of 12 numbers is shuffled
+* - The player is given the starting number
+* - The player has to decide whether the next number in the array
+*   is higher or lower than the current number
+*
+* In my opinion, this works better, as the game can now be played
+* tactically - if the current number is 13, the next number must
+* be lower; if the current number is 3, the odds are that the next
+* number will be higher, etc.
+*
+*/
 
 using System;
 using System.Linq;
@@ -24,10 +44,10 @@ namespace Challenge14
 {
     class Challenge14
     {
-        static int _playerlives = 2;
-        static int _playerpoints;
+        static int playerLives = 2;
+        static int playerPoints;
         const int WinThreshold = 10;
-        static int[] _numberSequence;
+        static int[] numberSequence;
 
         static void Main(string[] args)
         {
@@ -35,88 +55,80 @@ namespace Challenge14
             Run();
         }
 
-        public static void Init()
+        static void Init()
         {
-            _numberSequence = GenerateDeck(12, 13); // has to be 12 values - there are 2 lives
-            Console.WriteLine("Starting number: {0}", _numberSequence[0]);
+            numberSequence = GenerateDeck(12, 13);
+            Console.WriteLine("Starting number: {0}", numberSequence[0]);
         }
 
-        public static void Game(int i)
+        static void Game(int nextnum)
         {
             Console.Write("Higher (H) or lower (L)? ");
             var answer = Console.ReadKey();
             switch (char.ToLower(answer.KeyChar)) {
                 case 'h':
-                    if (_numberSequence[i] > _numberSequence[i - 1]) {
+                    if (numberSequence[nextnum] > numberSequence[nextnum - 1])
                         Correct();
-                    } else {
+                    else
                         Incorrect();
-                    }
                     break;
+
                 case 'l':
-                    if (_numberSequence[i] < _numberSequence[i - 1]) {
+                    if (numberSequence[nextnum] < numberSequence[nextnum - 1])
                         Correct();
-                    } else {
+                    else
                         Incorrect();
-                    }
                     break;
+
                 default:
                     Console.WriteLine(" That's not an answer!");
-                    Game(i);
+                    Game(nextnum);
                     break;
             }
         }
 
-        public static int[] GenerateDeck(int count, int max)
+        static int[] GenerateDeck(int count, int max)
         {
-            /* Generates array of numbers 1 to 'max',
-             * shuffles that array, then returns the
-             * first 'count' values from that array.
-             */
-
             var randNum = new Random();
-            var sequence = Enumerable.Range(1, max).ToArray();
+            int[] sequence = Enumerable.Range(1, max).ToArray();
 
-            for (int i = sequence.Length - 1; i > 0; i--) {
-                int n = randNum.Next(i + 1);
-                int temp = sequence[i];
-                sequence[i] = sequence[n];
-                sequence[n] = temp;
+            for (int i = 0; i < sequence.Length; i++) {
+                int randpos = i + randNum.Next(sequence.Length - i);
+                int temp = sequence[randpos];
+                sequence[randpos] = sequence[i];
+                sequence[i] = temp;
             }
-
-            int[] deck = sequence.Take(count).ToArray();
-            return deck;
+            return sequence.Take(count).ToArray();
         }
 
-        public static void Run()
+        static void Run()
         {
-            for (int i = 1; i < _numberSequence.Length; i++) {
-                Game(i);
-                Console.WriteLine("Next number: " + _numberSequence[i]);
+            for (int nextnum = 1; nextnum < numberSequence.Length; nextnum++) {
+                Game(nextnum);
+                Console.WriteLine("Next number: " + numberSequence[nextnum]);
             }
         }
 
-        public static void Incorrect()
+        static void Incorrect()
         {
-            _playerlives--;
-            if (_playerlives == 0) {
+            playerLives--;
+            if (playerLives == 0) {
                 Console.WriteLine(" Incorrect. No lives remaining, sorry!");
                 Environment.Exit(0);
             } else {
-                Console.WriteLine(" Incorrect, sorry. {0} lives remaining.", _playerlives);
+                Console.WriteLine(" Incorrect, sorry. {0} lives remaining.", playerLives);
             }
         }
 
-        public static void Correct()
+        static void Correct()
         {
-            _playerpoints++;
-            Console.WriteLine(" Correct! Points: {0}\n", _playerpoints);
-            if (_playerpoints == WinThreshold) {
+            playerPoints++;     // add a point
+            Console.WriteLine(" Correct! Points: {0}\n", playerPoints);
+            if (playerPoints == WinThreshold)
                 Win();
-            }
         }
 
-        public static void Win()
+        static void Win()
         {
             Console.Write("You won!");
             Environment.Exit(0);
