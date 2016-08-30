@@ -27,18 +27,20 @@ namespace Challenge16
     {
         static readonly List<int> NumberList = Enumerable.Range(1, 100).ToList();
         static int CurrentGuess;
-        static bool NumberGuessed = false;
+        static bool NumberGuessed;
         static int Target;
 
         static void Main(string[] args)
         {
-            Target = UserInteraction("Enter a number between 1 and 100: ");
+            do {
+                Target = UserInteraction("Enter a number between 1 and 100: ");
+            } while (Target > 100);
 
             while (!NumberGuessed) {
                 Console.WriteLine("\nIs {0} your number?", GuessNumber());
                 GuessResponse();
             }
-            Console.WriteLine("\nI guessed your number!");
+            Console.WriteLine("\nThe computer guessed your number!");
             Console.ReadKey();
         }
 
@@ -49,9 +51,8 @@ namespace Challenge16
             do {
                 Console.Write(prompt);
                 isnumber = int.TryParse(Console.ReadLine(), out providedvalue);
-                if (!isnumber) {
+                if (!isnumber)
                     Console.WriteLine("That's not a number");
-                }
             } while (!isnumber);
             return providedvalue;
         }
@@ -59,15 +60,7 @@ namespace Challenge16
         static int GuessNumber()
         {
             NumberList.Sort();
-            if (NumberList.Count > 1)
-            {
-                CurrentGuess = NumberList[((NumberList.Count + 1) / 2)];
-            }
-            else
-            {
-                CurrentGuess = NumberList[0];
-            }
-            
+            CurrentGuess = (NumberList.Count > 1) ? NumberList[(NumberList.Count + 1) / 2] : NumberList[0];
             return CurrentGuess;
         }
 
@@ -79,22 +72,20 @@ namespace Challenge16
             switch (char.ToLower(response.KeyChar)) {
                 case 'h':
                     foreach (int number in NumberList.ToList()) {
-                        if (number >= CurrentGuess) {
+                        if (number >= CurrentGuess)
                             NumberList.Remove(number);
-                        }
                     }
                     break;
                 case 'l':
                     foreach (int number in NumberList.ToList()) {
-                        if (number <= CurrentGuess) {
+                        if (number <= CurrentGuess)
                             NumberList.Remove(number);
-                        }
                     }
                     break;
                 case 'g':
-                    if (CurrentGuess == Target) { // this stops cheating
-                        NumberGuessed = true;
-                    }
+                    NumberGuessed = (CurrentGuess == Target);
+                    if (!NumberGuessed)
+                        Console.WriteLine("\nThat's not the number you put in!");
                     break;
             }
         }
