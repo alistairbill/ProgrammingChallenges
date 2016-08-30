@@ -36,14 +36,37 @@ namespace Challenge24
 {
     class Challenge24
     {
-        public static List<FootballMatch> ResultsList = new List<FootballMatch>();
+        static List<FootballMatch> ResultsList = new List<FootballMatch>()
+        {
+            new FootballMatch("West Brom", 0, "Middlesbrough", 0),
+            new FootballMatch("Man City", 3, "West Ham", 1),
+            new FootballMatch("Tottenham", 1, "Liverpool", 1),
+            new FootballMatch("Chelsea", 3, "Burnley", 0),
+            new FootballMatch("Crystal Palace", 1, "Bournemouth", 1),
+            new FootballMatch("Everton", 1, "Stoke", 1),
+            new FootballMatch("Leicester", 2, "Swansea", 1),
+            new FootballMatch("Southampton", 1, "Sunderland", 1),
+            new FootballMatch("Watford", 1, "Arsenal", 3),
+            new FootballMatch("Hull", 0, "Man Utd", 1),
+            new FootballMatch("Sunderland", 1, "Middlesbrough", 2),
+            new FootballMatch("West Ham", 1, "Bournemouth", 0),
+            new FootballMatch("Stoke", 1, "Man City", 4),
+            new FootballMatch("Burnley", 2, "Liverpool", 0),
+            new FootballMatch("Swansea", 0, "Hull", 2),
+            new FootballMatch("Tottenham", 1, "Crystal Palace", 0),
+            new FootballMatch("Watford", 1, "Chelsea", 2),
+            new FootballMatch("West Brom", 1, "Everton", 2),
+            new FootballMatch("Leicester", 0, "Arsenal", 0),
+            new FootballMatch("Man Utd", 2, "Southampton", 0),
+            new FootballMatch("Chelsea", 2, "West Ham", 1)
+        };
 
         static void Main(string[] args)
         {
             Run();
         }
 
-        public static void Run()
+        static void Run()
         {
             Console.WriteLine("Press [A] to add a result, [S] to search for results by team.");
 
@@ -52,8 +75,8 @@ namespace Challenge24
                     AddResult();
                     break;
                 case 's':
-                    Console.Write("Enter team name to search for: ");
-                    String name = Console.ReadLine();
+                    Console.Write("\nEnter team name to search for: ");
+                    string name = Console.ReadLine();
                     Console.WriteLine(PrintResult(name));
                     break;
                 default:
@@ -63,35 +86,34 @@ namespace Challenge24
             Run();
         }
 
-        public static void AddResult()
+        static void AddResult()
         {
             Console.Write("\nHome team: ");
-            String hometeam = Console.ReadLine();
+            string hometeam = Console.ReadLine();
             Console.Write("\nAway team: ");
-            String awayteam = Console.ReadLine();
+            string awayteam = Console.ReadLine();
             int hometeamscore = UserInteraction("Home team scored: ");
             int awayteamscore = UserInteraction("Away team scored: ");
             ResultsList.Add(new FootballMatch(hometeam, hometeamscore, awayteam, awayteamscore));
             Console.WriteLine(PrintResult(ResultsList.Count - 1));
         }
 
-        public static string PrintResult(int i)
+        static string PrintResult(int i)
         {
             return string.Format("Results: {0} {1} - {2} {3}", ResultsList[i].HomeTeam, ResultsList[i].HtScore,
                 ResultsList[i].AtScore, ResultsList[i].AwayTeam);
         }
 
-        public static string PrintResult(String team)
+        static string PrintResult(string team)
         {
-            var returnString = new StringBuilder();
-            foreach (var result in ResultsList.Where(result => 
-            String.Equals(result.HomeTeam, team, StringComparison.CurrentCultureIgnoreCase) || 
-            String.Equals(result.AwayTeam, team, StringComparison.CurrentCultureIgnoreCase)))
-            {
-                returnString.AppendLine(string.Format("Result: {0} {1} - {2} {3}", result.HomeTeam, result.HtScore,
+            var returnstring = new StringBuilder();
+            foreach (var result in ResultsList.Where(result =>
+            string.Equals(result.HomeTeam, team, StringComparison.CurrentCultureIgnoreCase) ||
+            string.Equals(result.AwayTeam, team, StringComparison.CurrentCultureIgnoreCase))) {
+                returnstring.AppendLine(string.Format("Result: {0} {1} - {2} {3}", result.HomeTeam, result.HtScore,
                     result.AtScore, result.AwayTeam));
             }
-            return returnString.ToString();
+            return returnstring.ToString();
         }
 
         static int UserInteraction(string prompt)
@@ -118,7 +140,7 @@ namespace Challenge24
         /// <param name="htScore">Home team score.</param>
         /// <param name="awayteam">Away team.</param>
         /// <param name="atScore">Away team score.</param>
-        public FootballMatch(String hometeam, int htScore, String awayteam, int atScore)
+        public FootballMatch(string hometeam, int htScore, string awayteam, int atScore)
         {
             HomeTeam = hometeam;
             AwayTeam = awayteam;
@@ -130,24 +152,24 @@ namespace Challenge24
         /// Gets the home team.
         /// </summary>
         /// <value>The home team.</value>
-        public String HomeTeam { get; private set; }
+        public readonly string HomeTeam;
 
         /// <summary>
         /// Gets the away team.
         /// </summary>
         /// <value>The away team.</value>
-        public String AwayTeam { get; private set; }
+        public readonly string AwayTeam;
 
         /// <summary>
         /// Gets the home team score.
         /// </summary>
         /// <value>The home team score.</value>
-        public int HtScore { get; private set; }
+        public readonly int HtScore;
 
         /// <summary>
         /// Gets the away team score.
         /// </summary>
         /// <value>The away team score.</value>
-        public int AtScore { get; private set; }
+        public readonly int AtScore;
     }
 }
