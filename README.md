@@ -26,7 +26,7 @@ All solutions will be written in C# as that's what I'm meant to be learning.
 - [ ] Challenge 17: Convert UMS to grade
 - [x] Challenge 18: Draw stars
 - [x] Challenge 19: Caesar cipher
-- [ ] Challenge 19 continued: Vigenère cipher
+- [x] Challenge 19 continued: Vigenère cipher
 - [x] Challenge 20: Fibonacci sequence generator
 - [ ] Challenge 21: Array of names
 - [x] Challenge 22: Display colours

@@ -50,16 +50,16 @@ namespace Challenge19
         {
             var program = true;
             do {
-                int encryptionKey = OffsetInput("Set offset: ");
+                int seedposition = OffsetInput("Set seed position: ");
 
                 Console.Write("\nEncrypt (e) or decrypt (d)?: ");
                 switch (char.ToLower(Console.ReadKey().KeyChar)) {
                     case 'e':
-                        var enc = Encrypt(UserInput("Enter text to encrypt: "), encryptionKey);
+                        string enc = Encrypt(UserInput("Enter text to encrypt: "), seedposition);
                         Console.WriteLine("Encrypted text: " + enc);
                         break;
                     case 'd':
-                        var dec = Decrypt(UserInput("Enter text to decrypt: "), encryptionKey);
+                        string dec = Decrypt(UserInput("Enter text to decrypt: "), seedposition);
                         Console.WriteLine("Decrypted text: " + dec);
                         break;
                     default:
@@ -67,9 +67,7 @@ namespace Challenge19
                         break;
                 }
                 Console.Write("\nEncrypt or decrypt another string? [y/n]: ");
-                if (char.ToLower(Console.ReadKey().KeyChar) == 'n') {
-                    program = false;
-                }
+                program = (char.ToLower(Console.ReadKey().KeyChar) != 'n');
             } while (program);
         }
 
@@ -93,42 +91,42 @@ namespace Challenge19
             return Console.ReadLine();
         }
 
-        static string Encrypt(string input, int offset)
+        static string Encrypt(string input, int seed)
         {
-            char[] plain = input.ToCharArray();
-
-            for (int i = 0; i < plain.Length; i++) {
+            char[] output = input.ToCharArray();
+            var random = new Random(seed);
+            for (int i = 0; i < output.Length; i++) {
+                int offset = random.Next();
                 for (int j = 0; j < Chars.Length; j++) {
-                    if (j <= Chars.Length - offset) {
-                        if (plain[i] == Chars[j]) {
-                            plain[i] = Chars[j + offset];
-                            break;
-                        }
-                    } else if (plain[i] == Chars[j]) {
-                        plain[i] = Chars[j - (Chars.Length - offset + 1)];
+                    if (output[i] == Chars[j]) {
+                        output[i] = Chars[(j + offset) % Chars.Length];
+                        break;
                     }
                 }
             }
-            return new string(plain);
+            return new string(output);
         }
 
-        static string Decrypt(string cip, int offset)
+        static string Decrypt(string input, int seed)
         {
-            char[] cipher = cip.ToCharArray();
+            char[] output = input.ToCharArray();
+            var random = new Random(seed);
 
-            for (int i = 0; i < cipher.Length; i++) {
+            for (int i = 0; i < output.Length; i++) {
+                int offset = random.Next();
                 for (int j = 0; j < Chars.Length; j++) {
-                    if (j >= offset && cipher[i] == Chars[j]) {
-                        cipher[i] = Chars[j - offset];
-                        break;
-                    }
-                    if (cipher[i] == Chars[j] && j < offset) {
-                        cipher[i] = Chars[(Chars.Length - offset + 1) + j];
+                    if (output[i] == Chars[j]) {
+                        for (int k = 1; k < Chars.Length; k++) {    // couldn't find a better way to reverse the modulo
+                            if ((k + offset) % Chars.Length == j) {
+                                output[i] = Chars[k];
+                                break;
+                            }
+                        }
                         break;
                     }
                 }
             }
-            return new string(cipher);
+            return new string(output);
         }
     }
 }
