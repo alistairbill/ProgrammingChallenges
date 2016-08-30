@@ -32,7 +32,7 @@ namespace Challenge18
             Run();
         }
 
-        public static void Run()
+        static void Run()
         {
             int baseSize = UserInteraction("Enter the size of the base of the triangle: ");
             Console.WriteLine();
@@ -40,7 +40,7 @@ namespace Challenge18
             Run();
         }
 
-        public static void DrawStars(int spaces, int stars)
+        static void DrawStars(int spaces, int stars)
         {
             for (int i = 0; i < spaces; i++) {
                 Console.Write(" ");
@@ -50,7 +50,7 @@ namespace Challenge18
             }
         }
 
-        public static void PrintTriangle(int baseSize)
+        static void PrintTriangle(int baseSize)
         {
             int stars = 1;
             int spaces = (baseSize - 1) / 2;
@@ -62,7 +62,7 @@ namespace Challenge18
             }
         }
 
-        public static int UserInteraction(string prompt)
+        static int UserInteraction(string prompt)
         {
             int providedvalue;
             bool isnumber;

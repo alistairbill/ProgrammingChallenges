@@ -27,7 +27,6 @@
  */
 
 using System;
-using System.Text;
 
 namespace Challenge19
 {
@@ -50,13 +49,11 @@ namespace Challenge19
         static void Main(string[] args)
         {
             var program = true;
-            do
-            {
+            do {
                 int encryptionKey = OffsetInput("Set offset: ");
 
                 Console.Write("\nEncrypt (e) or decrypt (d)?: ");
-                switch (char.ToLower(Console.ReadKey().KeyChar))
-                {
+                switch (char.ToLower(Console.ReadKey().KeyChar)) {
                     case 'e':
                         var enc = Encrypt(UserInput("Enter text to encrypt: "), encryptionKey);
                         Console.WriteLine("Encrypted text: " + enc);
@@ -70,8 +67,7 @@ namespace Challenge19
                         break;
                 }
                 Console.Write("\nEncrypt or decrypt another string? [y/n]: ");
-                if (char.ToLower(Console.ReadKey().KeyChar) == 'n')
-                {
+                if (char.ToLower(Console.ReadKey().KeyChar) == 'n') {
                     program = false;
                 }
             } while (program);

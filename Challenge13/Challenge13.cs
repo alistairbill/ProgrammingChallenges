@@ -15,18 +15,14 @@
  */
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Challenge13
 {
     class Challenge13
     {
-        public static int GameNum;
-        public static bool AiTurn;
-        public static Random RandInt = new Random();
+        static int GameNum;
+        static bool AiTurn;
+        static Random RandInt = new Random();
         static void Main(string[] args)
         {
             int startNum = RandInt.Next(20, 30);
@@ -38,7 +34,7 @@ namespace Challenge13
             Game();
         }
 
-        public static void Game()
+        static void Game()
         {
             if (GameNum > 0) {
                 PlayerTurn();
@@ -47,7 +43,7 @@ namespace Challenge13
             }
         }
 
-        public static void PlayerTurn()
+        static void PlayerTurn()
         {
             AiTurn = false;
 
@@ -64,7 +60,7 @@ namespace Challenge13
             }
         }
 
-        public static void ComputerTurn()
+        static void ComputerTurn()
         {
             if (GameNum <= 0) {
                 Game();
@@ -111,7 +107,7 @@ namespace Challenge13
             }
         }
 
-        public static void GameEnd()
+        static void GameEnd()
         {
             if (AiTurn) {
                 Console.WriteLine("You win!");
@@ -122,7 +118,7 @@ namespace Challenge13
             }
         }
 
-        public static int ConvertInput(string input)
+        static int ConvertInput(string input)
         {
             int result;
             return int.TryParse(input, out result) ? result : 0;

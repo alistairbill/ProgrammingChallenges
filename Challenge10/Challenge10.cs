@@ -1,7 +1,7 @@
 ﻿/* Challenge 10
- * 
+ *
  * Make a game of rock, paper, scissors against the computer.
- * 
+ *
  * Extension
  *  - Make sure the user enters a valid entry
  *  - Add a loop structure to play several times and keep a running score
@@ -14,52 +14,46 @@ namespace Challenge10
 {
     class Challenge10
     {
-        public enum Choice
+        enum Choice
         {
             Rock,
             Paper,
             Scissors
         }
 
-        public static Choice UserChoice, ComputerChoice;
-        public static int Score;
-        public static Random RandInt = new Random();
+        static Choice UserChoice, ComputerChoice;
+        static int Score;
+        static Random RandInt = new Random();
         static void Main(string[] args)
         {
             for (int i = 0; i < 10; i++) {
                 Game();
             }
+            Console.WriteLine("\nYour final score was " + Score);
         }
 
-        public static void Game()
+        static void Game()
         {
             UserSelect();
             ComputerSelect();
             Console.WriteLine("You chose {0} ~ Computer chooses {1}", UserChoice, ComputerChoice);
-            if (UserChoice == ComputerChoice)
-            {
+            if (UserChoice == ComputerChoice) {
                 Draw();
-            }
-            else if ((UserChoice == Choice.Rock && ComputerChoice == Choice.Scissors)
-                || (UserChoice == Choice.Paper) && (ComputerChoice == Choice.Rock)
-                || (UserChoice == Choice.Scissors && ComputerChoice == Choice.Paper))
-            {
+            } else if ((UserChoice == Choice.Rock && ComputerChoice == Choice.Scissors)
+                  || (UserChoice == Choice.Paper) && (ComputerChoice == Choice.Rock)
+                  || (UserChoice == Choice.Scissors && ComputerChoice == Choice.Paper)) {
                 Win();
-            }
-            else
-            {
+            } else {
                 Lose();
             }
         }
 
-        public static void UserSelect()
+        static void UserSelect()
         {
             Console.Write("\n\nRock, paper or scissors? ");
             var readLine = Console.ReadLine();
-            if (readLine != null)
-            {
-                switch (readLine.ToLower())
-                {
+            if (readLine != null) {
+                switch (readLine.ToLower()) {
                     case "rock":
                         UserChoice = Choice.Rock;
                         break;
@@ -73,42 +67,39 @@ namespace Challenge10
                         UserSelect();
                         break;
                 }
-            }
-            else
-            {
+            } else {
                 UserSelect();
-            }   
+            }
         }
 
-        public static void ComputerSelect()
+        static void ComputerSelect()
         {
             int random = RandInt.Next(1, 4);
-            switch (random)
-            {
+            switch (random) {
                 case 1:
                     ComputerChoice = Choice.Rock;
                     break;
                 case 2:
-                    ComputerChoice=Choice.Paper;
+                    ComputerChoice = Choice.Paper;
                     break;
                 case 3:
-                    ComputerChoice=Choice.Scissors;
+                    ComputerChoice = Choice.Scissors;
                     break;
             }
         }
 
-        public static void Win()
+        static void Win()
         {
             Score++;
             Console.Write("You won! Score: " + Score);
         }
 
-        public static void Draw()
+        static void Draw()
         {
             Console.Write("You drew! Score: " + Score);
         }
 
-        public static void Lose()
+        static void Lose()
         {
             Score--;
             Console.Write("You lost. Score: " + Score);

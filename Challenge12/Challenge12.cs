@@ -20,27 +20,22 @@ namespace Challenge12
             Console.ReadKey();
         }
 
-        public static void Run()
+        static void Run()
         {
             Console.Write("Enter an integer: ");
             string input = Console.ReadLine();
             int number;
             int[] factors = new int[0];
-            if (int.TryParse(input, out number))
-            {
+            if (int.TryParse(input, out number)) {
                 factors = Factorise(number);
-            }
-            else
-            {
+            } else {
                 Console.WriteLine("Not an integer");
                 Run();
             }
 
-            if (factors.Length > 0)
-            {
+            if (factors.Length > 0) {
                 Console.Write("The factors of {0} are:", number);
-                foreach (int item in factors)
-                {
+                foreach (int item in factors) {
                     Console.Write(" " + item);
                 }
                 return;
@@ -48,11 +43,10 @@ namespace Challenge12
             Console.WriteLine("{0} is a prime number", number);
         }
 
-        public static int[] Factorise(int number)
+        static int[] Factorise(int number)
         {
             var factors = new List<int>();
-            for (int i = number - 1; i > 1; i--)
-            {
+            for (int i = number - 1; i > 1; i--) {
                 if (number % i == 0) factors.Add(i);
             }
             return factors.ToArray();

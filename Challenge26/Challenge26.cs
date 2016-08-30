@@ -20,11 +20,11 @@ namespace Challenge26
 {
     class Challenge26
     {
-        public static int[] code = new int[4];
-        public static int[] guess = new int[4];
-        public static int correct, exact;
-        public static int lives = 12;
-        public static Random random = new Random();
+        static int[] code = new int[4];
+        static int[] guess = new int[4];
+        static int correct, exact;
+        static int lives = 12;
+        static Random random = new Random();
 
         static void Main(string[] args)
         {
@@ -32,7 +32,7 @@ namespace Challenge26
             Run();
         }
 
-        public static void GenerateCode()
+        static void GenerateCode()
         {
             for (int i = 0; i < code.Length; i++) {
                 code[i] = random.Next(0, 9);
@@ -40,14 +40,14 @@ namespace Challenge26
 
         }
 
-        public static void Run()
+        static void Run()
         {
             correct = 0;
             exact = 0;
             Console.WriteLine("Guess code: ");
-            String input = Console.ReadLine();
+            string input = Console.ReadLine();
             for (int i = 0; i < code.Length; i++) {
-                guess[i] = (int)Char.GetNumericValue(input[i]);
+                guess[i] = (int)char.GetNumericValue(input[i]);
             }
             Check();
             lives--;
@@ -59,7 +59,7 @@ namespace Challenge26
             }
         }
 
-        public static void Check()
+        static void Check()
         {
             for (int i = 0; i < code.Length; i++) {
                 for (int j = 0; j < guess.Length; j++) {
