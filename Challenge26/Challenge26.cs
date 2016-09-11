@@ -15,14 +15,13 @@
  */
 
 using System;
+using System.Linq;
 
 namespace Challenge26
 {
     class Challenge26
     {
         static int[] code = new int[4];
-        static int[] guess = new int[4];
-        static int correct, exact;
         static int lives = 12;
         static Random random = new Random();
 
@@ -37,49 +36,46 @@ namespace Challenge26
             for (int i = 0; i < code.Length; i++) {
                 code[i] = random.Next(0, 9);
             }
-
         }
 
         static void Run()
         {
-            correct = 0;
-            exact = 0;
-            Console.WriteLine("Guess code: ");
-            string input = Console.ReadLine();
-            for (int i = 0; i < code.Length; i++) {
-                guess[i] = (int)char.GetNumericValue(input[i]);
+            int[] guess = new int[4];
+            while (lives > 0) {
+                Console.WriteLine("Guess code: ");
+                string input = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(input)) continue;
+
+                Array.Clear(guess, 0, guess.Length);
+
+                for (int i = 0; i < code.Length; i++) {
+                    guess[i] = (int)char.GetNumericValue(input[i]);
+                }
+                Check(guess);
+                lives--;
             }
-            Check();
-            lives--;
-            if (lives == 0) {
-                Console.WriteLine("You lose!");
-                Environment.Exit(0);
-            } else {
-                Run();
-            }
+            Console.WriteLine("You lose!");
         }
 
-        static void Check()
+        static void Check(int[] guess)
         {
+            int correct = 0;
+            int exact = 0;
             for (int i = 0; i < code.Length; i++) {
-                for (int j = 0; j < guess.Length; j++) {
-                    if (code[i] == guess[j]) {
-                        correct++;
-                        break;
-                    }
-                }
-                if (code[i] == guess[i]) {
+                if (guess.Any(t => code[i] == t))
+                    correct++;
+                if (code[i] == guess[i])
                     exact++;
-                }
             }
+
             Console.WriteLine("Correct: {0} | Exactly correct: {1}", correct, exact);
             Console.WriteLine();
-            if (exact == code.Length) {
-                Console.WriteLine("***********************");
-                Console.WriteLine("* You win! Well done! *");
-                Console.WriteLine("***********************");
-                Environment.Exit(0);
-            }
+            if (exact != code.Length) return;
+            Console.WriteLine("***********************");
+            Console.WriteLine("* You win! Well done! *");
+            Console.WriteLine("***********************");
+            Console.ReadKey();
         }
     }
 }
