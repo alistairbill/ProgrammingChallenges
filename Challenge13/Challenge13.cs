@@ -21,7 +21,7 @@ namespace Challenge13
     class Challenge13
     {
         static int GameNum;
-        static bool AiTurn;
+        static bool ComputersTurn;
         static Random RandInt = new Random();
         static void Main(string[] args)
         {
@@ -45,7 +45,7 @@ namespace Challenge13
 
         static void PlayerTurn()
         {
-            AiTurn = false;
+            ComputersTurn = false;
 
             Console.Write("How many do you want to remove? ");
             int playerRemove = ConvertInput(Console.ReadLine());
@@ -65,19 +65,19 @@ namespace Challenge13
             if (GameNum <= 0) {
                 Game();
             } else if (GameNum == 1) {
-                AiTurn = true;
+                ComputersTurn = true;
                 Console.WriteLine("Computer removes 1");
                 GameNum -= 1;
                 Console.WriteLine("{0} left", GameNum);
                 Game();
             } else if (GameNum <= 4) {
-                AiTurn = true;
+                ComputersTurn = true;
                 Console.WriteLine("Computer removes {0}", GameNum - 1);
                 GameNum -= (GameNum - 1);
                 Console.WriteLine("{0} left", GameNum);
                 Game();
             } else {
-                AiTurn = true;
+                ComputersTurn = true;
                 int diff = GameNum % 4;
 
                 switch (diff) {
@@ -109,7 +109,7 @@ namespace Challenge13
 
         static void GameEnd()
         {
-            if (AiTurn) {
+            if (ComputersTurn) {
                 Console.WriteLine("You win!");
                 Environment.Exit(0);
             } else {

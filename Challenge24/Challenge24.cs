@@ -95,13 +95,13 @@ namespace Challenge24
             int hometeamscore = UserInteraction("Home team scored: ");
             int awayteamscore = UserInteraction("Away team scored: ");
             ResultsList.Add(new FootballMatch(hometeam, hometeamscore, awayteam, awayteamscore));
-            Console.WriteLine(PrintResult(ResultsList.Count - 1));
+            Console.WriteLine(PrintResult(ResultsList.Count - 1)); // list is zero-indexed
         }
 
         static string PrintResult(int i)
         {
-            return string.Format("Results: {0} {1} - {2} {3}", ResultsList[i].HomeTeam, ResultsList[i].HtScore,
-                ResultsList[i].AtScore, ResultsList[i].AwayTeam);
+            return string.Format("Results: {0} {1} - {2} {3}", ResultsList[i].HomeTeam, ResultsList[i].HomeScore,
+                ResultsList[i].AwayScore, ResultsList[i].AwayTeam);
         }
 
         static string PrintResult(string team)
@@ -110,8 +110,8 @@ namespace Challenge24
             foreach (var result in ResultsList.Where(result =>
             string.Equals(result.HomeTeam, team, StringComparison.CurrentCultureIgnoreCase) ||
             string.Equals(result.AwayTeam, team, StringComparison.CurrentCultureIgnoreCase))) {
-                returnstring.AppendLine(string.Format("Result: {0} {1} - {2} {3}", result.HomeTeam, result.HtScore,
-                    result.AtScore, result.AwayTeam));
+                returnstring.AppendLine(string.Format("Result: {0} {1} - {2} {3}", result.HomeTeam, result.HomeScore,
+                    result.AwayScore, result.AwayTeam));
             }
             return returnstring.ToString();
         }
@@ -137,15 +137,15 @@ namespace Challenge24
         /// Initializes a new instance of the FootballMatch class.
         /// </summary>
         /// <param name="hometeam">Home team.</param>
-        /// <param name="htScore">Home team score.</param>
+        /// <param name="homeScore">Home team score.</param>
         /// <param name="awayteam">Away team.</param>
-        /// <param name="atScore">Away team score.</param>
-        public FootballMatch(string hometeam, int htScore, string awayteam, int atScore)
+        /// <param name="awayScore">Away team score.</param>
+        public FootballMatch(string hometeam, int homeScore, string awayteam, int awayScore)
         {
             HomeTeam = hometeam;
             AwayTeam = awayteam;
-            HtScore = htScore;
-            AtScore = atScore;
+            HomeScore = homeScore;
+            AwayScore = awayScore;
         }
 
         /// <summary>
@@ -164,12 +164,12 @@ namespace Challenge24
         /// Gets the home team score.
         /// </summary>
         /// <value>The home team score.</value>
-        public readonly int HtScore;
+        public readonly int HomeScore;
 
         /// <summary>
         /// Gets the away team score.
         /// </summary>
         /// <value>The away team score.</value>
-        public readonly int AtScore;
+        public readonly int AwayScore;
     }
 }
