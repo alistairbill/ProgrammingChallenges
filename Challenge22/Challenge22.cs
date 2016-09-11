@@ -46,7 +46,7 @@ namespace Challenge22
                     string number = (Box[row, column] < 10) ? "0" + Box[row,column] : Box[row,column].ToString();
                     Console.Write(number + " ");
                 }
-                Console.Write("\n");
+                Console.Write(Environment.NewLine);
             }
             return;
         }
@@ -58,7 +58,7 @@ namespace Challenge22
                     Console.BackgroundColor = (ConsoleColor)Box[row, column];
                     Console.Write("   ");
                 }
-                Console.Write("\n");
+                Console.Write(Environment.NewLine);
             }
             Console.ResetColor();
         }
