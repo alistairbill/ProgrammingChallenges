@@ -29,15 +29,16 @@ namespace Challenge18
     {
         static void Main(string[] args)
         {
-            Run();
+            Run(); // enter the loop
         }
 
         static void Run()
         {
-            int baseSize = UserInteraction("Enter the size of the base of the triangle: ");
-            Console.WriteLine();
-            PrintTriangle(baseSize);
-            Run();
+            while (true) {
+                int baseSize = UserInteraction("Enter the size of the base of the triangle: ");
+                Console.WriteLine();
+                PrintTriangle(baseSize);
+            }
         }
 
         static void DrawStars(int spaces, int stars)
